@@ -32,8 +32,9 @@ public class User  {
 	private String password;
 	
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Role role;
+	private String role;
+	//@Enumerated(EnumType.STRING)
+	//private Role role;
 	
 	@Column(nullable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
@@ -72,13 +73,13 @@ public class User  {
 		this.password = password;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
+//	public Role getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(Role role) {
+//		this.role = role;
+//	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -86,6 +87,10 @@ public class User  {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	

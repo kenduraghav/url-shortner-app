@@ -14,7 +14,7 @@ public class ShortUrl {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique=true, nullable = false)
+	@Column(unique=true, nullable = false, name="short_key")
 	private String shortkey;
 	
 	@Column(nullable=false)
