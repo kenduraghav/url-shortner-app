@@ -18,6 +18,6 @@ public class ShortUrlService {
 	
 	
 	public List<ShortUrl> findAllPublicUrls(){
-		return shortUrlRepository.findByIsPrivateIsFalse();
+		return shortUrlRepository.findAllPublicUrls();
 	}
 }
