@@ -7,7 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.domain.entity.ShortUrl;
-import com.example.demo.service.ShortUrlService;
+import com.example.demo.domain.model.ShortUrlDto;
+import com.example.demo.services.ShortUrlService;
 
 @Controller
 public class HomeController {
@@ -22,7 +23,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home(Model model) {
-		List<ShortUrl> shortUrls = shortUrlService.findAllPublicUrls();
+		List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls();
 		model.addAttribute("shortUrls", shortUrls);
 		model.addAttribute("title", "URL Shortner App - using Thymeleaf");
 		return "index";
