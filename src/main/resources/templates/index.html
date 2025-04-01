@@ -23,6 +23,7 @@
                 <th>ID</th>
                 <th>Short Key</th>
                 <th>Original URL</th>
+                <th>Created By</th>
                 <th>Created </th>
                 <th>Expires At</th>
             </tr>
@@ -38,6 +39,7 @@
                        th:text="${#strings.abbreviate(url.originalUrl, 50)}">
                     </a>
                 </td>
+                <td th:text="${url.createdBy != null ? url.createdBy.name : 'Guest'}"></td>
                 <td th:text="${#temporals.format(url.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${url.expiresAt != null ? #temporals.format(url.expiresAt, 'yyyy-MM-dd HH:mm:ss') : 'Never Expires'}"></td>
             </tr>
