@@ -11,6 +11,6 @@ import com.example.demo.domain.entity.ShortUrl;
 @Repository
 public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
 
-	@Query("select e from ShortUrl e where e.isPrivate = false order by e.createdAt desc")
+	@Query("select e from ShortUrl e left join fetch e.createdBy where e.isPrivate = false order by e.createdAt desc")
 	List<ShortUrl> findAllPublicUrls();
 }
