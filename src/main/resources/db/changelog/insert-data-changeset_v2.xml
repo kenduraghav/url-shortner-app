@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        
+       
+    <changeSet author="raghav" id="7">
+    	<!-- Insert Short URLs -->
+        <insert tableName="short_urls">
+        	<column name="id" value="100"/>
+            <column name="short_key" value="ab9cd8e2f1100"/>
+            <column name="original_url" value="https://news.example.com/article6"/>
+            <column name="is_private" valueBoolean="false"/>
+            <column name="created_by" value="null"/>
+            <column name="click_count" value="10"/>
+            <column name="expires_at" value="2025-12-31 23:59:59"/>
+        </insert>
+
+        <insert tableName="short_urls">
+        	<column name="id" value="101"/>
+            <column name="short_key" value="9h7j8k1z3r101"/>
+            <column name="original_url" value="https://blog.example.com/post5"/>
+            <column name="is_private" valueBoolean="false"/>
+            <column name="created_by" value="null"/>
+            <column name="click_count" value="5"/>
+            <column name="expires_at" value="2025-11-30 23:59:59"/>
+        </insert>
+
+        <insert tableName="short_urls">
+        	<column name="id" value="102"/>
+            <column name="short_key" value="7gf4h9jk8o102"/>
+            <column name="original_url" value="https://shop.example.com/product4"/>
+            <column name="is_private" valueBoolean="false"/>
+            <column name="created_by" value="null"/>
+            <column name="click_count" value="20"/>
+            <column name="expires_at" value="2026-01-15 12:00:00"/>
+        </insert>
+
+        <insert tableName="short_urls">
+        	<column name="id" value="103"/>
+            <column name="short_key" value="7ab3df6k2z103"/>
+            <column name="original_url" value="https://video.example.com/watch?v=123415"/>
+            <column name="is_private" valueBoolean="false"/>
+            <column name="created_by" value="null"/>
+            <column name="click_count" value="50"/>
+            <column name="expires_at" value="2025-09-01 10:00:00"/>
+        </insert>
+
+        <insert tableName="short_urls">
+        	<column name="id" value="104"/>
+            <column name="short_key" value="6d9e2h4l1p104"/>
+            <column name="original_url" value="https://social.example.com/profile6"/>
+            <column name="is_private" valueBoolean="false"/>
+            <column name="created_by" value="null"/>
+            <column name="click_count" value="0"/>
+            <column name="expires_at" value="2025-08-15 18:30:00"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
