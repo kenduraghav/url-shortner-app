@@ -1,6 +1,7 @@
 package com.example.demo.domain.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,6 @@ public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
 	List<ShortUrl> findAllPublicUrls();
 
 	boolean existsByShortkey(String shortKey);
+
+	Optional<ShortUrl> findByShortkey(String shortKey);
 }

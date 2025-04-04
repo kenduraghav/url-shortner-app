@@ -1,11 +1,13 @@
 package com.example.demo.domain.services;
 
 import java.security.SecureRandom;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.ApplicationProperties;
 import com.example.demo.domain.entities.ShortUrl;
@@ -14,6 +16,7 @@ import com.example.demo.domain.models.ShortUrlDto;
 import com.example.demo.domain.repositories.ShortUrlRepository;
 
 @Service
+@Transactional(readOnly = true)
 public class ShortUrlService {
 
 	private final ShortUrlRepository shortUrlRepository;
@@ -33,25 +36,22 @@ public class ShortUrlService {
 				.toList();
 	}
 	
+	@Transactional
 	public ShortUrlDto createShortUrl(CreateShortUrlCmd cmd) {
-		
 		if(properties.validateURL()) {
-			
 			boolean urlExists = URLChecker.isURLExists(cmd.originalUrl());
 			if(!urlExists) {
 				throw new RuntimeException("Invalid URL");
 			}
-		
 		}
 		
 		var shortkey= generateUniqueShortKey();
 		var shortUrl = new ShortUrl();
-		
 		shortUrl.setShortkey(shortkey);
 		shortUrl.setOriginalUrl(cmd.originalUrl());
 		shortUrl.setClickCount(0l);
 		shortUrl.setCreatedBy(null);
-		shortUrl.setExpiresAt(LocalDateTime.now().plus(properties.defaultExpiryInDays(), ChronoUnit.DAYS));
+		shortUrl.setExpiresAt(Instant.now().plus(properties.defaultExpiryInDays(), ChronoUnit.DAYS));
 		shortUrl.setIsPrivate(false);
 		shortUrlRepository.save(shortUrl);
 		return entityMapper.toShortUrlDto(shortUrl);
@@ -78,4 +78,21 @@ public class ShortUrlService {
         }
         return key.toString();
     }
+
+    @Transactional
+	public Optional<ShortUrlDto> accessShortUrl(String shortKey) {
+		Optional<ShortUrl> optionalShortUrl = shortUrlRepository.findByShortkey(shortKey);
+		if(optionalShortUrl.isEmpty()) {
+			return Optional.empty();
+		}
+		
+		ShortUrl shortUrl = optionalShortUrl.get();
+		if(shortUrl.getExpiresAt() != null && shortUrl.getExpiresAt().isBefore(Instant.now())) {
+			return Optional.empty();
+		}
+		
+		shortUrl.setClickCount(shortUrl.getClickCount()+ 1);
+		shortUrlRepository.save(shortUrl);
+		return optionalShortUrl.map(entityMapper::toShortUrlDto);
+	}
 }
