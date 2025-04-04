@@ -1,9 +1,9 @@
-package com.example.demo.domain.entity;
+package com.example.demo.domain.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.example.demo.domain.model.Role;
+import com.example.demo.domain.models.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

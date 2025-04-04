@@ -1,11 +1,11 @@
-package com.example.demo.services;
+package com.example.demo.domain.services;
 
 import org.springframework.stereotype.Component;
 
-import com.example.demo.domain.entity.ShortUrl;
-import com.example.demo.domain.entity.User;
-import com.example.demo.domain.model.ShortUrlDto;
-import com.example.demo.domain.model.UserDto;
+import com.example.demo.domain.entities.ShortUrl;
+import com.example.demo.domain.entities.User;
+import com.example.demo.domain.models.ShortUrlDto;
+import com.example.demo.domain.models.UserDto;
 
 @Component
 public class EntityMapper {

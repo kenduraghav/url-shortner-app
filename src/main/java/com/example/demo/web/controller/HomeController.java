@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.domain.model.CreateShortUrlCmd;
-import com.example.demo.domain.model.ShortUrlDto;
-import com.example.demo.services.ShortUrlService;
+import com.example.demo.ApplicationProperties;
+import com.example.demo.domain.models.CreateShortUrlCmd;
+import com.example.demo.domain.models.ShortUrlDto;
+import com.example.demo.domain.services.ShortUrlService;
 import com.example.demo.web.dto.CreateShortUrlForm;
 
 import jakarta.validation.Valid;
@@ -22,10 +23,12 @@ public class HomeController {
 
 	
 	private final ShortUrlService shortUrlService;
+	private final ApplicationProperties properties;
 	
 	
-	public HomeController(ShortUrlService shortUrlService) {
+	public HomeController(ShortUrlService shortUrlService, ApplicationProperties properties) {
 		this.shortUrlService = shortUrlService;
+		this.properties = properties;
 	}
 
 	@GetMapping("/")
@@ -50,7 +53,7 @@ public class HomeController {
 		try {
 			CreateShortUrlCmd cmd = new CreateShortUrlCmd(form.originalUrl());
 			var shortUrlDto = shortUrlService.createShortUrl(cmd);
-			redirectAttributes.addFlashAttribute("successMessage", "Short URL created: " + "http://localhost:8080/s/"+shortUrlDto.shortkey());
+			redirectAttributes.addFlashAttribute("successMessage", "Short URL created: " + properties.baseUrl()+"/s/"+shortUrlDto.shortkey());
 		}catch(Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Failed to create short url.");
 		}

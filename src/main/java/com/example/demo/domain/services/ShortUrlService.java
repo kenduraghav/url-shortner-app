@@ -1,4 +1,4 @@
-package com.example.demo.services;
+package com.example.demo.domain.services;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -7,9 +7,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.domain.entity.ShortUrl;
-import com.example.demo.domain.model.CreateShortUrlCmd;
-import com.example.demo.domain.model.ShortUrlDto;
+import com.example.demo.ApplicationProperties;
+import com.example.demo.domain.entities.ShortUrl;
+import com.example.demo.domain.models.CreateShortUrlCmd;
+import com.example.demo.domain.models.ShortUrlDto;
 import com.example.demo.domain.repositories.ShortUrlRepository;
 
 @Service
@@ -17,10 +18,12 @@ public class ShortUrlService {
 
 	private final ShortUrlRepository shortUrlRepository;
 	private final EntityMapper entityMapper;
+	private final ApplicationProperties properties;
 	
-	public ShortUrlService(ShortUrlRepository shortUrlRepository, EntityMapper entityMapper) {
+	public ShortUrlService(ShortUrlRepository shortUrlRepository, EntityMapper entityMapper, ApplicationProperties properties) {
 		this.shortUrlRepository = shortUrlRepository;
 		this.entityMapper = entityMapper;
+		this.properties = properties;
 	}
 	
 	public List<ShortUrlDto> findAllPublicUrls(){
@@ -31,6 +34,16 @@ public class ShortUrlService {
 	}
 	
 	public ShortUrlDto createShortUrl(CreateShortUrlCmd cmd) {
+		
+		if(properties.validateURL()) {
+			
+			boolean urlExists = URLChecker.isURLExists(cmd.originalUrl());
+			if(!urlExists) {
+				throw new RuntimeException("Invalid URL");
+			}
+		
+		}
+		
 		var shortkey= generateUniqueShortKey();
 		var shortUrl = new ShortUrl();
 		
@@ -38,7 +51,7 @@ public class ShortUrlService {
 		shortUrl.setOriginalUrl(cmd.originalUrl());
 		shortUrl.setClickCount(0l);
 		shortUrl.setCreatedBy(null);
-		shortUrl.setExpiresAt(LocalDateTime.now().plus(30, ChronoUnit.DAYS));
+		shortUrl.setExpiresAt(LocalDateTime.now().plus(properties.defaultExpiryInDays(), ChronoUnit.DAYS));
 		shortUrl.setIsPrivate(false);
 		shortUrlRepository.save(shortUrl);
 		return entityMapper.toShortUrlDto(shortUrl);
