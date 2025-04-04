@@ -5,14 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>URL Shortner Application</title>
+<title>URL Shortener</title>
 <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet">
 <link  th:href="@{/css/styles.css}" rel="stylesheet"> 
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg fixed-top" data-bs-theme="dark">
   <div class="container">
-    <a class="navbar-brand" th:href="@{/}">URL Shortner Application</a>
+    <a class="navbar-brand" th:href="@{/}">URL Shortener Application</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -38,6 +38,18 @@
 </nav>
 
 <div class="container">
+	
+	<div th:if="${successMessage}" 
+			class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+		 	 <strong>Success!</strong> <span th:text="${successMessage}"></span>
+		 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div th:if="${errorMessage}" 
+			class="alert alert-danger alert-dismissible fade show mt-3 " role="alert">
+		 	 <strong>Error!</strong> <span th:text="${errorMessage}"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
 	
 	<div layout:fragment="content">
 		<!--  User content goes here -->

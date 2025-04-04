@@ -10,41 +10,70 @@
 </head>
 <body>
 <div layout:fragment="content">
-	<p class="lead mb-5">A Simple URL Shortner Application</p>
+	<div class="d-flex justify-content-center align-items-center">
+		<p class="lead mt-3 mb-3">A Simple URL Shortener Application</p>	
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-sm-6">
+			<div class="card mt-5">
+				<div class="card-header">
+					<h5 class="card-title">Create a Short URL</h5>
+				</div>
+				
+				 <div class="card-body">
+				 	<form th:action="@{/short-urls}" method="post" th:object="${createShortUrlForm}" class="needs-validation" novalidate>
+				 		<div class="mb-3">
+				 			<label for="originalUrl" class="form-label">Enter URL</label>
+	                            <input type="text" class="form-control" id="originalUrl" 
+	                                   th:field="*{originalUrl}" placeholder="Enter your URL">
+	                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('originalUrl')}" 
+	                                 th:errors="*{originalUrl}"></div>
+				 		</div>
+				 		
+				 		     <div class="text-end">
+	                            <button type="submit" class="btn btn-primary">Shorten URL</button>
+	                        </div>
+				 	</form>
+				 </div>
+			</div>
+		</div>
+	</div>
 	
-	<h5 class="mb-3">Shortened URLs</h5>
-
-    <div th:if="${shortUrls.isEmpty()}" class="alert alert-warning">
-        No records found.
+	
+	<div class="mt-5">
+		<p class="h5">Shorten URLs</p>
+	    <div th:if="${shortUrls.isEmpty()}" class="alert alert-warning">
+	        No records found.
+	    </div>
+	    <table th:if="${not shortUrls.isEmpty()}" class="table table-bordered table-striped">
+	        <thead class="table-dark">
+	            <tr>
+	                <th>ID</th>
+	                <th>Short Key</th>
+	                <th>Original URL</th>
+	                <th>Created By</th>
+	                <th>Created </th>
+	                <th>Expires At</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="url : ${shortUrls}">
+	                <td th:text="${url.id}"></td>
+	                <td>
+	                    <a th:href="@{|/s/${url.shortkey}|}" th:text="${url.shortkey}" target="_blank" class="text-primary"></a>
+	                </td>
+	                 <td>
+	                    <a th:href="${url.originalUrl}" class="text-success" target="_blank"
+	                       th:text="${#strings.abbreviate(url.originalUrl, 50)}">
+	                    </a>
+	                </td>
+	                <td th:text="${url.createdBy != null ? url.createdBy.name : 'Guest'}"></td>
+	                <td th:text="${#temporals.format(url.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+	                <td th:text="${url.expiresAt != null ? #temporals.format(url.expiresAt, 'yyyy-MM-dd HH:mm:ss') : 'Never Expires'}"></td>
+	            </tr>
+	        </tbody>
+	    </table>
     </div>
-    <table th:if="${not shortUrls.isEmpty()}" class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Short Key</th>
-                <th>Original URL</th>
-                <th>Created By</th>
-                <th>Created </th>
-                <th>Expires At</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="url : ${shortUrls}">
-                <td th:text="${url.id}"></td>
-                <td>
-                    <a th:href="@{|/s/${url.shortkey}|}" th:text="${url.shortkey}" target="_blank" class="text-primary"></a>
-                </td>
-                 <td>
-                    <a th:href="${url.originalUrl}" class="text-success" target="_blank"
-                       th:text="${#strings.abbreviate(url.originalUrl, 50)}">
-                    </a>
-                </td>
-                <td th:text="${url.createdBy != null ? url.createdBy.name : 'Guest'}"></td>
-                <td th:text="${#temporals.format(url.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                <td th:text="${url.expiresAt != null ? #temporals.format(url.expiresAt, 'yyyy-MM-dd HH:mm:ss') : 'Never Expires'}"></td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>
