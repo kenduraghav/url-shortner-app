@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        
+    <changeSet id="3" author="raghav">
+        
+        <!-- Insert Users -->
+        <insert tableName="users">
+            <column name="email" value="admin@example.com"/>
+            <column name="password" value="admin"/>
+            <column name="name" value="Administrator"/>
+            <column name="role" value="ROLE_ADMIN"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="email" value="user@example.com"/>
+            <column name="password" value="password"/>
+            <column name="name" value="Demo User"/>
+            <column name="role" value="ROLE_USER"/>
+        </insert>       
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -7,10 +7,13 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-
-
-	<include file="create-table-changeset.xml" relativeToChangelogFile="true"/>
-	<include file="insert-data-changeset_v1.xml"  relativeToChangelogFile="true"/>
-	<include file="update-data-changeset_v1.xml"  relativeToChangelogFile="true"/>
+        
+       
+    <changeSet author="raghav" id="4">
+    	<sql>
+    		update users set password='$2a$10$emmmelMy.NVaOLsapqKnkeuMx/7ZHr1STr0V49VHVkl8SfNA9SvSi' where email='admin@example.com';
+    		update users set password='$2a$10$TC1u9TyqCauNYqaQNgWv4e6LB.UQn/vF7fNYFJQESvmNKQz9eQx7W' where email='user@example.com';
+    	</sql>
+    </changeSet>
 
 </databaseChangeLog>

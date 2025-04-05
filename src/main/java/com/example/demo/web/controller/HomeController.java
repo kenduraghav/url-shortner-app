@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.ApplicationProperties;
+import com.example.demo.domain.entities.User;
 import com.example.demo.domain.exceptions.ShortUrlNotFoundException;
 import com.example.demo.domain.models.CreateShortUrlCmd;
 import com.example.demo.domain.models.ShortUrlDto;
@@ -24,18 +25,19 @@ import jakarta.validation.Valid;
 @Controller
 public class HomeController {
 
-	
 	private final ShortUrlService shortUrlService;
 	private final ApplicationProperties properties;
+	private final SecurityUtils securityUtils;
 	
-	
-	public HomeController(ShortUrlService shortUrlService, ApplicationProperties properties) {
+	public HomeController(ShortUrlService shortUrlService, ApplicationProperties properties, SecurityUtils securityUtils) {
 		this.shortUrlService = shortUrlService;
 		this.properties = properties;
+		this.securityUtils = securityUtils;
 	}
 
 	@GetMapping("/")
 	public String home(Model model) {
+		User currentUser = securityUtils.getCurrentUser(); 
 		List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls();
 		model.addAttribute("shortUrls", shortUrls);
 		model.addAttribute("title", "URL Shortner App - using Thymeleaf");
@@ -77,4 +79,8 @@ public class HomeController {
 		return "redirect:"+shortUrlDto.originalUrl();
 	}
 	
+	@GetMapping("/login")
+	String loginForm() {
+		return "login";
+	}
 }
