@@ -61,8 +61,12 @@ public class ShortUrlService {
 			shortUrl.setIsPrivate(false);
 		} else {
 			shortUrl.setCreatedBy(userRepository.findById(cmd.createBy()).orElse(null));
-			shortUrl.setExpiresAt(Instant.now().plus(cmd.expirationInDays(), ChronoUnit.DAYS));
-			shortUrl.setIsPrivate(cmd.isPrivate());
+			if(cmd.expirationInDays() != null) {
+				shortUrl.setExpiresAt(Instant.now().plus(cmd.expirationInDays(), ChronoUnit.DAYS));
+			} else {
+				shortUrl.setExpiresAt(null);
+			}
+			shortUrl.setIsPrivate((cmd.isPrivate() != null) ? true : null);
 		}
 		
 		
@@ -70,7 +74,31 @@ public class ShortUrlService {
 		return entityMapper.toShortUrlDto(shortUrl);
 	}
 
-	private String generateUniqueShortKey() {
+    @Transactional
+	public Optional<ShortUrlDto> accessShortUrl(String shortKey, Long currentUserId) {
+		Optional<ShortUrl> optionalShortUrl = shortUrlRepository.findByShortkey(shortKey);
+		if(optionalShortUrl.isEmpty()) {
+			return Optional.empty();
+		}
+		
+		ShortUrl shortUrl = optionalShortUrl.get();
+		if(shortUrl.getExpiresAt() != null && shortUrl.getExpiresAt().isBefore(Instant.now())) {
+			return Optional.empty();
+		}
+		
+		
+		if(shortUrl.getIsPrivate() != null && (shortUrl.getCreatedBy() != null
+				 && shortUrl.getCreatedBy().getId() != currentUserId)) {
+			return Optional.empty();
+		}
+		
+		shortUrl.setClickCount(shortUrl.getClickCount()+ 1);
+		shortUrlRepository.save(shortUrl);
+		return optionalShortUrl.map(entityMapper::toShortUrlDto);
+	}
+    
+    
+    private String generateUniqueShortKey() {
 		String shortKey;
 		do {
 			 shortKey = generateRandomShortKey();
@@ -91,21 +119,4 @@ public class ShortUrlService {
         }
         return key.toString();
     }
-
-    @Transactional
-	public Optional<ShortUrlDto> accessShortUrl(String shortKey) {
-		Optional<ShortUrl> optionalShortUrl = shortUrlRepository.findByShortkey(shortKey);
-		if(optionalShortUrl.isEmpty()) {
-			return Optional.empty();
-		}
-		
-		ShortUrl shortUrl = optionalShortUrl.get();
-		if(shortUrl.getExpiresAt() != null && shortUrl.getExpiresAt().isBefore(Instant.now())) {
-			return Optional.empty();
-		}
-		
-		shortUrl.setClickCount(shortUrl.getClickCount()+ 1);
-		shortUrlRepository.save(shortUrl);
-		return optionalShortUrl.map(entityMapper::toShortUrlDto);
-	}
 }
