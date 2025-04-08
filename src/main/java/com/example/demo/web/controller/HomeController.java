@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.ApplicationProperties;
-import com.example.demo.domain.entities.User;
 import com.example.demo.domain.exceptions.ShortUrlNotFoundException;
 import com.example.demo.domain.models.CreateShortUrlCmd;
 import com.example.demo.domain.models.ShortUrlDto;
@@ -37,11 +36,10 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home(Model model) {
-		User currentUser = securityUtils.getCurrentUser(); 
 		List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls();
 		model.addAttribute("shortUrls", shortUrls);
 		model.addAttribute("title", "URL Shortner App - using Thymeleaf");
-		model.addAttribute("createShortUrlForm", new CreateShortUrlForm(""));
+		model.addAttribute("createShortUrlForm", new CreateShortUrlForm("", null, null));
 		return "index";
 	}
 	
@@ -56,7 +54,10 @@ public class HomeController {
 			return "index";
 		}
 		try {
-			CreateShortUrlCmd cmd = new CreateShortUrlCmd(form.originalUrl());
+			Long currentUserId = securityUtils.getCurrentUserId();
+			CreateShortUrlCmd cmd = new CreateShortUrlCmd(form.originalUrl(), 
+					form.isPrivate(), currentUserId,
+					form.expirationInDays());
 			var shortUrlDto = shortUrlService.createShortUrl(cmd);
 			redirectAttributes.addFlashAttribute("successMessage", "Short URL created: " + properties.baseUrl()+"/s/"+shortUrlDto.shortkey());
 		}catch(Exception e) {

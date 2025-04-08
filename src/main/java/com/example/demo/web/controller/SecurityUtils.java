@@ -26,4 +26,12 @@ public class SecurityUtils {
 		}
 		return null;
 	}
+	
+	public Long getCurrentUserId() {
+		User user = getCurrentUser();
+		if(user != null) {
+			return user.getId();
+		}
+		return null;
+	}
 }

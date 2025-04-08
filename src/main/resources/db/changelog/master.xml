@@ -12,5 +12,6 @@
 	<include file="create-table-changeset.xml" relativeToChangelogFile="true"/>
 	<include file="insert-data-changeset_v1.xml"  relativeToChangelogFile="true"/>
 	<include file="update-data-changeset_v1.xml"  relativeToChangelogFile="true"/>
+	<include file="insert-data-changeset_v2.xml"  relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

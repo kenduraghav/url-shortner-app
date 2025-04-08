@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        
+        
+   <changeSet id="5" author="raghav">
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="J4vA9x"/>
+	        <column name="original_url" value="https://www.baeldung.com/java"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="C0deRx"/>
+	        <column name="original_url" value="https://www.geeksforgeeks.org/java/"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="ZkY12A"/>
+	        <column name="original_url" value="https://www.javatpoint.com/java-tutorial"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="9XaLm3"/>
+	        <column name="original_url" value="https://javarevisited.blogspot.com/"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="Qr7Nz1"/>
+	        <column name="original_url" value="https://howtodoinjava.com/"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="TmB8cD"/>
+	        <column name="original_url" value="https://dzone.com/java-jdk-development-tutorials-tools-news"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="W2KdPq"/>
+	        <column name="original_url" value="https://www.javacodegeeks.com/"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="A1z3Xy"/>
+	        <column name="original_url" value="https://www.oracle.com/java/technologies/javase-downloads.html"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="NjLk08"/>
+	        <column name="original_url" value="https://spring.io/guides"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="XpR57q"/>
+	        <column name="original_url" value="https://refactoring.guru/design-patterns/java"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="L9wTy2"/>
+	        <column name="original_url" value="https://medium.com/tag/java"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="Bq8LmZ"/>
+	        <column name="original_url" value="https://mkyong.com/tutorials/java-tutorials/"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="HgZ21s"/>
+	        <column name="original_url" value="https://www.javainuse.com/"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="YtG89k"/>
+	        <column name="original_url" value="https://programmingwithmosh.com/java/"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+	    <insert tableName="short_urls">
+	        <column name="short_key" value="K2XeMn"/>
+	        <column name="original_url" value="https://codegym.cc/blog/java/"/>
+	        <column name="is_private" valueBoolean="false"/>
+	        <column name="created_by" valueNumeric="1"/>
+	    </insert>
+</changeSet>
+
+        
+        
+
+</databaseChangeLog>
