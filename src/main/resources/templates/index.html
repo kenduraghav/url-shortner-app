@@ -63,7 +63,6 @@
 	    <table th:if="${not shortUrls.isEmpty()}" class="table table-bordered table-striped">
 	        <thead class="table-dark">
 	            <tr>
-	                <th>ID</th>
 	                <th>Short Key</th>
 	                <th>Original URL</th>
 	                <th>Created By</th>
@@ -73,7 +72,6 @@
 	        </thead>
 	        <tbody>
 	            <tr th:each="url : ${shortUrls}">
-	                <td th:text="${url.id}"></td>
 	                <td>
 	                    <a th:href="@{|/s/${url.shortkey}|}" th:text="${url.shortkey}" target="_blank" class="text-primary"></a>
 	                </td>

@@ -1,11 +1,16 @@
 package com.example.demo.domain.services;
 
+import static org.springframework.data.domain.Sort.by;
+
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,9 +38,10 @@ public class ShortUrlService {
 		this.userRepository = userRepository;
 	}
 	
-	public List<ShortUrlDto> findAllPublicUrls(){
-		return shortUrlRepository.findAllPublicUrls()
-				.stream()
+	public List<ShortUrlDto> findAllPublicUrls(int pageNo, int pageSize){
+		pageNo = pageNo > 1 ? pageNo-1 : 0; 
+		Pageable  page = PageRequest.of(pageNo, pageSize, by(Sort.Direction.DESC,"createdAt"));
+		return shortUrlRepository.findAllPublicUrls(page)
 				.map(entityMapper::toShortUrlDto)
 				.toList();
 	}

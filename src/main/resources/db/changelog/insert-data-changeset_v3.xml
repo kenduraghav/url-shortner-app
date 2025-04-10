@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        
+        
+   <changeSet id="6" author="raghav">
+    <insert tableName="short_urls">
+        <column name="short_key" value="JvA1bC"/>
+        <column name="original_url" value="https://www.baeldung.com/java-collections"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="9dXrPt"/>
+        <column name="original_url" value="https://www.javacodegeeks.com/2023/01/java-stream-api.html"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Tg4ZqN"/>
+        <column name="original_url" value="https://www.geeksforgeeks.org/collections-in-java/"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Lm2XaB"/>
+        <column name="original_url" value="https://www.journaldev.com/1377/java-interface"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Vk4pZ1"/>
+        <column name="original_url" value="https://www.baeldung.com/java-8-features"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Ax7BtD"/>
+        <column name="original_url" value="https://dzone.com/articles/understanding-java-memory-model"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Nr3Kj8"/>
+        <column name="original_url" value="https://www.oracle.com/java/technologies/javase/codeconventions-contents.html"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Mw9LpQ"/>
+        <column name="original_url" value="https://www.baeldung.com/java-thread-local"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Yt8GvW"/>
+        <column name="original_url" value="https://www.javainuse.com/spring/boot-jpa"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Uc6TnF"/>
+        <column name="original_url" value="https://www.baeldung.com/jpa-join-types"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Zp7CwV"/>
+        <column name="original_url" value="https://www.javaguides.net/2020/05/spring-boot-hibernate-crud-example.html"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Bq2NjM"/>
+        <column name="original_url" value="https://reflectoring.io/java-records/"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Rh5SaE"/>
+        <column name="original_url" value="https://howtodoinjava.com/java8/lambda-expressions-examples/"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Ft3QzX"/>
+        <column name="original_url" value="https://www.baeldung.com/java-concurrent-hashmap"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+    <insert tableName="short_urls">
+        <column name="short_key" value="Hb6MwN"/>
+        <column name="original_url" value="https://www.vogella.com/tutorials/JavaCollections/article.html"/>
+        <column name="is_private" valueBoolean="false"/>
+        <column name="created_by" valueNumeric="1"/>
+    </insert>
+</changeSet>
+   
+
+        
+        
+
+</databaseChangeLog>

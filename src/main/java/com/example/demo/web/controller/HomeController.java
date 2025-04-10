@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.ApplicationProperties;
@@ -35,8 +36,10 @@ public class HomeController {
 	}
 
 	@GetMapping("/")
-	public String home(Model model) {
-		List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls();
+	public String home(Model model,
+			@RequestParam(defaultValue = "1") int pageNo, 
+			@RequestParam (defaultValue = "10") int pageSize) {
+		List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls(pageNo,pageSize);
 		model.addAttribute("shortUrls", shortUrls);
 		model.addAttribute("title", "URL Shortner App - using Thymeleaf");
 		model.addAttribute("createShortUrlForm", new CreateShortUrlForm("", null, null));
@@ -49,7 +52,7 @@ public class HomeController {
 			RedirectAttributes redirectAttributes,
 			Model model) {
 		if(bindingResult.hasErrors()) {
-			List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls();
+			List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls(1,properties.pageSize());
 			model.addAttribute("shortUrls", shortUrls);
 			return "index";
 		}
