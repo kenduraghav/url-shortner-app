@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.ApplicationProperties;
 import com.example.demo.domain.exceptions.ShortUrlNotFoundException;
 import com.example.demo.domain.models.CreateShortUrlCmd;
+import com.example.demo.domain.models.PagedResult;
 import com.example.demo.domain.models.ShortUrlDto;
 import com.example.demo.domain.services.ShortUrlService;
 import com.example.demo.web.dto.CreateShortUrlForm;
@@ -37,13 +38,21 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home(Model model,
-			@RequestParam(defaultValue = "1") int pageNo, 
-			@RequestParam (defaultValue = "10") int pageSize) {
-		List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls(pageNo,pageSize);
+			@RequestParam(defaultValue = "1") int page) {
+		PagedResult<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls(page,properties.pageSize());
 		model.addAttribute("shortUrls", shortUrls);
-		model.addAttribute("title", "URL Shortner App - using Thymeleaf");
+		model.addAttribute("paginationUrl","/");
 		model.addAttribute("createShortUrlForm", new CreateShortUrlForm("", null, null));
 		return "index";
+	}
+	
+	@GetMapping("/my-urls")
+	public String getUserUrls(@RequestParam(defaultValue="1") int page, Model model) {
+		Long currentUserId = securityUtils.getCurrentUserId();
+		PagedResult<ShortUrlDto> userShortURLs = shortUrlService.getUserShortURLs(currentUserId, page, properties.pageSize());
+		model.addAttribute("paginationUrl","/my-urls");
+		model.addAttribute("shortUrls", userShortURLs);
+		return "my-urls";
 	}
 	
 	@PostMapping("/short-urls")
@@ -52,7 +61,7 @@ public class HomeController {
 			RedirectAttributes redirectAttributes,
 			Model model) {
 		if(bindingResult.hasErrors()) {
-			List<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls(1,properties.pageSize());
+			PagedResult<ShortUrlDto> shortUrls = shortUrlService.findAllPublicUrls(1,properties.pageSize());
 			model.addAttribute("shortUrls", shortUrls);
 			return "index";
 		}
@@ -68,6 +77,20 @@ public class HomeController {
 		}
 		return "redirect:/";
 	}
+	
+	@PostMapping("/delete-urls")
+	public String deleteShortUrls(@RequestParam List<Long> ids, RedirectAttributes redirectAttributes, Model  model) {
+		if(ids.isEmpty()) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Please select atleast one record to delete.");
+			return "my-urls";
+		}
+		Long currentUserId = securityUtils.getCurrentUserId();
+		shortUrlService.deleteShortUrlsByIds(ids,currentUserId);
+		redirectAttributes.addFlashAttribute("successMessage", "Selected URLs have been deleted");
+		return "redirect:/my-urls";
+	}
+	
+	
 	
 	
 	@GetMapping("/s/{shortKey}")

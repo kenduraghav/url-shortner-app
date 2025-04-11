@@ -1,5 +1,6 @@
 package com.example.demo.domain.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -23,4 +24,9 @@ public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
 	
 	@Query("select e from ShortUrl e left join fetch e.createdBy where e.shortkey = ?1 order by e.createdAt desc")
 	Optional<ShortUrl> findByShortkey(String shortKey);
+	
+	
+	Page<ShortUrl>  findByCreatedById(Long userId, Pageable page);
+
+	void deleteByIdInAndCreatedById(List<Long> ids, Long currentUserId);
 }

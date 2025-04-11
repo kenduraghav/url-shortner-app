@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}"
+>
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const selectAllCheckbox = document.getElementById("selectAll");
+    const checkboxes = document.querySelectorAll(".row-checkbox");
+    const deleteBtn = document.getElementById("btnDeleteSelected");
+    const form = document.getElementById("deleteForm");
+
+    // Enable/disable delete button based on checkbox state
+    function toggleDeleteButton() {
+      const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+      deleteBtn.disabled = !anyChecked;
+    }
+
+    // Select/Deselect all rows
+    selectAllCheckbox.addEventListener("change", function () {
+      checkboxes.forEach(cb => cb.checked = this.checked);
+      toggleDeleteButton();
+    });
+
+    // Toggle state on each checkbox
+    checkboxes.forEach(cb => {
+      cb.addEventListener("change", function () {
+        toggleDeleteButton();
+        if (!this.checked) {
+          selectAllCheckbox.checked = false;
+        }
+      });
+    });
+
+    // Confirmation before deleting
+    form.addEventListener("submit", function (e) {
+      const confirmed = confirm("Are you sure you want to delete the selected URLs?");
+      if (confirmed) {
+        form.submit();
+      }
+    });
+  });
+</script>
+</head>
+<body>
+<div layout:fragment="content">
+		<h3 class="mt-5">My Shortened URLs</h3>
+	    <div th:if="${shortUrls.data.isEmpty()}" class="alert alert-warning">
+	        No records found.
+	    </div>
+	    <div th:if="${not shortUrls.data.isEmpty()}" class="table-responsive">
+	    	<form th:action="@{/delete-urls}" method="post" id="deleteForm">
+		    	<div class="mb-3">
+		    		<button type="submit" id="btnDeleteSelected" class="btn btn-danger" disabled>Delete Selected</button>
+		    	</div>
+				   <table class="table table-bordered table-striped">
+				        <thead class="table-dark">
+				            <tr>
+				            	<th><input type="checkbox" id="selectAll"></th>
+				                <th>Short Key</th>
+				                <th>Original URL</th>
+				                <th>Created By</th>
+				                <th>Created </th>
+				                <th>Expires At</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr th:each="url : ${shortUrls.data}">
+				            	<td>
+				            		<input type="checkbox" class="row-checkbox form-check-input" name="ids" th:value="${url.id}">
+				            	</td>
+				                <td>
+				                    <a th:href="@{|/s/${url.shortkey}|}" th:text="${url.shortkey}" target="_blank" class="text-primary"></a>
+				                </td>
+				                 <td>
+				                    <a th:href="${url.originalUrl}" class="text-success" target="_blank"
+				                       th:text="${#strings.abbreviate(url.originalUrl, 50)}">
+				                    </a>
+				                </td>
+				                <td th:text="${url.createdBy != null ? url.createdBy.name : 'Guest'}"></td>
+				                <td th:text="${#temporals.format(url.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				                <td th:text="${url.expiresAt != null ? #temporals.format(url.expiresAt, 'yyyy-MM-dd HH:mm:ss') : 'Never Expires'}"></td>
+				            </tr>
+				        </tbody>
+				    </table>
+		   		</form>
+		   		<div th:insert="~{pagination}"></div>
+	    	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}"
+>
+<head>
+<meta charset="UTF-8">
+<title>Something Went Wrong</title>
+</head>
+<body>
+<div layout:fragment="content">
+	 <h1 class="display-1 fw-bold text-danger">500</h1>
+       <h3 class="mb-3">Oops! Internal Server Error</h3>
+     <p class="text-muted">We're working on it. Please try again later.</p>
+    <a href="/" class="btn btn-outline-light mt-3">Home</a>
+</div>
+</body>
+</html>

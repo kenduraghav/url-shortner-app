@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.ApplicationProperties;
 import com.example.demo.domain.entities.ShortUrl;
 import com.example.demo.domain.models.CreateShortUrlCmd;
+import com.example.demo.domain.models.PagedResult;
 import com.example.demo.domain.models.ShortUrlDto;
 import com.example.demo.domain.repositories.ShortUrlRepository;
 import com.example.demo.domain.repositories.UsersRepository;
@@ -38,12 +40,21 @@ public class ShortUrlService {
 		this.userRepository = userRepository;
 	}
 	
-	public List<ShortUrlDto> findAllPublicUrls(int pageNo, int pageSize){
+	public PagedResult<ShortUrlDto> findAllPublicUrls(int pageNo, int pageSize){
+		Pageable pageable = getPageable(pageNo, pageSize);
+		Page<ShortUrlDto> allPublicUrls = shortUrlRepository.findAllPublicUrls(pageable).map(entityMapper::toShortUrlDto);
+		return PagedResult.from(allPublicUrls);
+	}
+	
+	public PagedResult<ShortUrlDto> getUserShortURLs(Long userId, int pageNo, int pageSize){
+		Pageable pageable = getPageable(pageNo, pageSize);
+		Page<ShortUrlDto> userShortUrls = shortUrlRepository.findByCreatedById(userId,pageable).map(entityMapper::toShortUrlDto);
+		return PagedResult.from(userShortUrls);
+	}
+
+	private Pageable getPageable(int pageNo, int pageSize) {
 		pageNo = pageNo > 1 ? pageNo-1 : 0; 
-		Pageable  page = PageRequest.of(pageNo, pageSize, by(Sort.Direction.DESC,"createdAt"));
-		return shortUrlRepository.findAllPublicUrls(page)
-				.map(entityMapper::toShortUrlDto)
-				.toList();
+		return PageRequest.of(pageNo, pageSize, by(Sort.Direction.DESC,"createdAt"));
 	}
 	
 	@Transactional
@@ -74,8 +85,6 @@ public class ShortUrlService {
 			}
 			shortUrl.setIsPrivate((cmd.isPrivate() != null) ? true : null);
 		}
-		
-		
 		shortUrlRepository.save(shortUrl);
 		return entityMapper.toShortUrlDto(shortUrl);
 	}
@@ -125,4 +134,9 @@ public class ShortUrlService {
         }
         return key.toString();
     }
+    
+    @Transactional
+	public void deleteShortUrlsByIds(List<Long> ids,Long currentUserId) {
+		shortUrlRepository.deleteByIdInAndCreatedById(ids, currentUserId);
+	}
 }
