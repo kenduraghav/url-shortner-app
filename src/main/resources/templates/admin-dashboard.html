@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<h3 class="mt-5">My Shortened URLs</h3>
+		<div th:if="${shortUrls.data.isEmpty()}" class="alert alert-warning">
+			No records found.</div>
+		<div th:if="${not shortUrls.data.isEmpty()}" class="table-responsive">
+			<table class="table table-bordered table-striped">
+				<thead class="table-dark">
+					<tr>
+						<th>Short Key</th>
+						<th>Original URL</th>
+						<th>Created By</th>
+						<th>Created</th>
+						<th>Expires At</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="url : ${shortUrls.data}">
+						<td><a th:href="@{|/s/${url.shortkey}|}"
+							th:text="${url.shortkey}" target="_blank" class="text-primary"></a>
+						</td>
+						<td><a th:href="${url.originalUrl}" class="text-success"
+							target="_blank"
+							th:text="${#strings.abbreviate(url.originalUrl, 50)}"> </a></td>
+						<td
+							th:text="${url.createdBy != null ? url.createdBy.name : 'Guest'}"></td>
+						<td
+							th:text="${#temporals.format(url.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+						<td
+							th:text="${url.expiresAt != null ? #temporals.format(url.expiresAt, 'yyyy-MM-dd HH:mm:ss') : 'Never Expires'}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div th:insert="~{pagination}"></div>
+		</div>
+	</div>
+</body>
+</html>

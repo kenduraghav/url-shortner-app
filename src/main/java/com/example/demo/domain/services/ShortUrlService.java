@@ -51,6 +51,12 @@ public class ShortUrlService {
 		Page<ShortUrlDto> userShortUrls = shortUrlRepository.findByCreatedById(userId,pageable).map(entityMapper::toShortUrlDto);
 		return PagedResult.from(userShortUrls);
 	}
+	
+	public PagedResult<ShortUrlDto> findAllShortUrls(int pageNo, int pageSize) {
+		Pageable pageable = getPageable(pageNo, pageSize);
+		Page<ShortUrlDto> allShortUrls = shortUrlRepository.findAllShortUrls(pageable).map(entityMapper::toShortUrlDto);
+		return PagedResult.from(allShortUrls);
+	}
 
 	private Pageable getPageable(int pageNo, int pageSize) {
 		pageNo = pageNo > 1 ? pageNo-1 : 0; 
@@ -70,7 +76,7 @@ public class ShortUrlService {
 		var shortUrl = new ShortUrl();
 		shortUrl.setShortkey(shortkey);
 		shortUrl.setOriginalUrl(cmd.originalUrl());
-		shortUrl.setClickCount(0l);
+		shortUrl.setClickCount(0L);
 		
 		if(cmd.createBy() == null) {
 			shortUrl.setCreatedBy(null);
@@ -113,6 +119,11 @@ public class ShortUrlService {
 	}
     
     
+    @Transactional
+	public void deleteShortUrlsByIds(List<Long> ids,Long currentUserId) {
+		shortUrlRepository.deleteByIdInAndCreatedById(ids, currentUserId);
+	}
+
     private String generateUniqueShortKey() {
 		String shortKey;
 		do {
@@ -135,8 +146,4 @@ public class ShortUrlService {
         return key.toString();
     }
     
-    @Transactional
-	public void deleteShortUrlsByIds(List<Long> ids,Long currentUserId) {
-		shortUrlRepository.deleteByIdInAndCreatedById(ids, currentUserId);
-	}
 }

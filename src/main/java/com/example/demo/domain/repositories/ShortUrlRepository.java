@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,6 @@ import com.example.demo.domain.entities.ShortUrl;
 @Repository
 public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
 
-//	@Query("select e from ShortUrl e left join fetch e.createdBy where e.isPrivate = false order by e.createdAt desc")
 	@Query("select e from ShortUrl e where e.isPrivate = false")
 	@EntityGraph(attributePaths = {"createdBy"})
 	Page<ShortUrl> findAllPublicUrls(Pageable page);
@@ -27,6 +27,10 @@ public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
 	
 	
 	Page<ShortUrl>  findByCreatedById(Long userId, Pageable page);
-
+	
+	@Modifying
 	void deleteByIdInAndCreatedById(List<Long> ids, Long currentUserId);
+
+	@Query("select e from ShortUrl e left join fetch e.createdBy order by e.createdAt desc")
+	Page<ShortUrl> findAllShortUrls(Pageable pageable);
 }

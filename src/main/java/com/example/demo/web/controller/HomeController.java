@@ -84,9 +84,15 @@ public class HomeController {
 			redirectAttributes.addFlashAttribute("errorMessage", "Please select atleast one record to delete.");
 			return "my-urls";
 		}
-		Long currentUserId = securityUtils.getCurrentUserId();
-		shortUrlService.deleteShortUrlsByIds(ids,currentUserId);
-		redirectAttributes.addFlashAttribute("successMessage", "Selected URLs have been deleted");
+		
+		try {
+			Long currentUserId = securityUtils.getCurrentUserId();
+			shortUrlService.deleteShortUrlsByIds(ids,currentUserId);
+			redirectAttributes.addFlashAttribute("successMessage", "Selected URLs have been deleted");
+		}catch(Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Unable to delete the selected URLs");
+		}
+		
 		return "redirect:/my-urls";
 	}
 	
