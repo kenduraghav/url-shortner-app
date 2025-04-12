@@ -21,6 +21,8 @@
 						<th>Created By</th>
 						<th>Created</th>
 						<th>Expires At</th>
+						<th>Type</th>
+		                <th>Click Count</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,12 +33,15 @@
 						<td><a th:href="${url.originalUrl}" class="text-success"
 							target="_blank"
 							th:text="${#strings.abbreviate(url.originalUrl, 50)}"> </a></td>
-						<td
-							th:text="${url.createdBy != null ? url.createdBy.name : 'Guest'}"></td>
-						<td
-							th:text="${#temporals.format(url.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-						<td
-							th:text="${url.expiresAt != null ? #temporals.format(url.expiresAt, 'yyyy-MM-dd HH:mm:ss') : 'Never Expires'}"></td>
+						<td th:text="${url.createdBy != null ? url.createdBy.name : 'Guest'}"></td>
+						<td th:text="${#temporals.format(url.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+						<td th:text="${url.expiresAt != null ? #temporals.format(url.expiresAt, 'yyyy-MM-dd HH:mm:ss') : 'Never Expires'}"></td>
+						<td>
+		                	<span class="badge rounded-pill" 
+				                th:classappend="${url.isPrivate} ? 'text-bg-secondary':'text-bg-success'" th:text="${url.isPrivate} ? 'Private': 'Public'">
+				            </span>
+		                </td>
+		                <td th:text="${url.clickCount}"></td>
 					</tr>
 				</tbody>
 			</table>

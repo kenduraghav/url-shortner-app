@@ -1,5 +1,6 @@
 package com.example.demo.web.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,18 +14,16 @@ import com.example.demo.domain.services.ShortUrlService;
 
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
-	
 	private final ShortUrlService shortUrlService;
 	private final ApplicationProperties properties;
-	
 	
 	public AdminController(ShortUrlService shortUrlService, ApplicationProperties properties) {
 		this.shortUrlService = shortUrlService;
 		this.properties = properties;
 	}
-	
 	
 	
 	@GetMapping("/dashboard")
