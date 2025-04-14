@@ -26,7 +26,7 @@ public class SecurityConfig {
 
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/error", "/login", "/webjars/**", "/js/**", "/css/**", "/images/**", "/",
+						.requestMatchers("/error", "/login", "/register", "/webjars/**", "/js/**", "/css/**", "/images/**", "/",
 								"/short-urls", "/s/**")
 						.permitAll()
 //						.requestMatchers("/my-urls").authenticated()

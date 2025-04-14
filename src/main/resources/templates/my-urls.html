@@ -31,9 +31,10 @@
     checkboxes.forEach(cb => {
       cb.addEventListener("change", function () {
         toggleDeleteButton();
-        if (!this.checked) {
-          selectAllCheckbox.checked = false;
-        }
+        //if (!this.checked) {
+          const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+          selectAllCheckbox.checked = allChecked;
+        //}
       });
     });
 
