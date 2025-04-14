@@ -1,25 +1,27 @@
-# Project Changelog
-## Generated from Git Commit History
-- Added method security and Role hierarchy (kenduraghav)
-- Added Admin Dashboard functionality (kenduraghav)
-- Added My URL functionality. Delete Selected URLs functionality (kenduraghav)
-- Added Basic pagination with default values (kenduraghav)
-- RedirectToOriginal URL if user logged in for private urls (kenduraghav)
-- Updated Short URL with isPrivate and Expiration days for logged in user. Inserted data for short_urls (kenduraghav)
-- Added Custom Spring Security Configuration, Role based access control and Display of Logged in User info (kenduraghav)
-- Added Spring Security Configuration with defaults (kenduraghav)
-- Added Short Key URL Redirections and Exception Handling(404- if page not found) (kenduraghav)
-- Refactored packages. Added Configuration Properties for app based and  checks the URL is valid or not. (kenduraghav)
-- Added Create Short URL form and service to save the Shortened URL generated with validations (kenduraghav)
-- Added Entity Mapper using java records. Package names refactored (kenduraghav)
-- Fixed lazy loading using second approach with Entity Graphs (kenduraghav)
-- Fixed Lazy loading exception using left join fetch in JPQL (@query annotation) (kenduraghav)
-- Disabled Open Session in view to throw lazy loading initialization exception (kenduraghav)
-- Added columns for CreatedBy and displaying the user details. (kenduraghav)
-- Changed derived query to JPQL to have more control (kenduraghav)
-- Added findByIsPrivateIsFalse method for listing only public urls (kenduraghav)
-- Added Repository and added Public URLs List page (kenduraghav)
-- Added Liquibase Migration for the schema and data (kenduraghav)
-- Added support for Spring Data JPA and docker compose support for postgres (kenduraghav)
-- Changed index page to show the dynamic content (kenduraghav)
-- Added Home Page layout decoration (kenduraghav)
+# Project Work Log\n
+- 2025-04-14: Changed UserRepository to use JDBC Client
+- 2025-04-14: Added user registration form function. Fixed My-URLs checkbox issue
+- 2025-04-14: Added README.md
+- 2025-04-12: Added method security and Role hierarchy
+- 2025-04-12: Added Admin Dashboard functionality
+- 2025-04-12: Added My URL functionality. Delete Selected URLs functionality
+- 2025-04-10: Added Basic pagination with default values
+- 2025-04-09: RedirectToOriginal URL if user logged in for private urls
+- 2025-04-08: Updated Short URL with isPrivate and Expiration days for logged in user. Inserted data for short_urls
+- 2025-04-05: Added Custom Spring Security Configuration, Role based access control and Display of Logged in User info
+- 2025-04-05: Added Spring Security Configuration with defaults
+- 2025-04-05: Added Short Key URL Redirections and Exception Handling(404- if page not found)
+- 2025-04-04: Refactored packages. Added Configuration Properties for app based and  checks the URL is valid or not.
+- 2025-04-04: Added Create Short URL form and service to save the Shortened URL generated with validations
+- 2025-04-01: Added Entity Mapper using java records. Package names refactored
+- 2025-04-01: Fixed lazy loading using second approach with Entity Graphs
+- 2025-04-01: Fixed Lazy loading exception using left join fetch in JPQL (@query annotation)
+- 2025-04-01: Disabled Open Session in view to throw lazy loading initialization exception
+- 2025-04-01: Added columns for CreatedBy and displaying the user details.
+- 2025-03-29: Changed derived query to JPQL to have more control
+- 2025-03-29: Added findByIsPrivateIsFalse method for listing only public urls
+- 2025-03-29: Added Repository and added Public URLs List page
+- 2025-03-29: Added Liquibase Migration for the schema and data
+- 2025-03-29: Added support for Spring Data JPA and docker compose support for postgres
+- 2025-03-27: Changed index page to show the dynamic content
+- 2025-03-27: Added Home Page layout decoration
