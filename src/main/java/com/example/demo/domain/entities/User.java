@@ -1,6 +1,5 @@
 package com.example.demo.domain.entities;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.example.demo.domain.models.Role;

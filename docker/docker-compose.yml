@@ -1,0 +1,38 @@
+
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  url-shortner-app:
+    image: kenduraghav/url-shortner-app
+    container_name: url-shortner-app
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      JAVA_TOOL_OPTIONS: >
+        -XX:MaxRAMPercentage=65.0
+        -XX:MaxMetaspaceSize=128m
+        -XX:ReservedCodeCacheSize=64m
+        -XX:MaxDirectMemorySize=32m
+        -Xss512k
+        -XX:+UseG1GC
+        -XX:+UseStringDeduplication
+        -XX:+AlwaysPreTouch
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres-data:

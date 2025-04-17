@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Config
+APP_NAME=url-shortner-app
+IMAGE_NAME=kenduraghav/url-shortner-app  # Replace with your Docker Hub username
+DOCKERFILE_PATH=./Dockerfile
+COMPOSE_FILE=./docker/docker-compose.yml
+
+# Functions
+deploy() {
+  echo "📦 Building Docker image..."
+  docker build -t $IMAGE_NAME -f $DOCKERFILE_PATH .
+
+  echo "🚀 Pushing Docker image to registry..."
+  docker push $IMAGE_NAME
+
+  echo "🧱 Starting services with Docker Compose..."
+  docker-compose -f $COMPOSE_FILE up -d
+
+  echo "✅ Deployment complete!"
+}
+
+stop() {
+  echo "⏸️ Stopping containers..."
+  docker-compose -f $COMPOSE_FILE stop
+  echo "✅ Containers stopped."
+}
+
+start() {
+  echo "▶️ Starting containers..."
+  docker-compose -f $COMPOSE_FILE start
+  echo "✅ Containers started."
+}
+
+# Entrypoint
+case "$1" in
+  deploy) deploy ;;
+  stop) stop ;;
+  start) start ;;
+  *)
+    echo "❌ Invalid command: $1"
+    echo "Usage: $0 {deploy|stop|start}"
+    exit 1
+    ;;
+esac
